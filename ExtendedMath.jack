@@ -1,0 +1,78 @@
+// to messing with 8 bits blocks in the screen I must creating a new Math lib with some more important functions . 
+// so I will add shift left and right and I will add Random number , and fast multiply by 2,4,8,16,32,64,128,256 (most basic nums). 
+// This lang is realy sucks !! ;-) 
+class ExtendedMath{
+    function int shiftRightOne(){
+        return  1; 
+    }
+    function int rolOne(){
+        return 1; 
+    }
+
+    function int rorOne(int val ){
+       return 1 ;  
+    }
+
+
+    // efficient way to preform a shift . 
+    function int shiftLeft1(int val){
+        return val+val; 
+    }
+    function int shiftLeft2(int val){
+        let val = val + val ; 
+        return val+val; 
+    }
+    function int shiftLeft3(int val){
+        let val = val + val ; 
+        let val = val + val ; 
+        return val+val; 
+    }
+    function int shiftLeft4(int val){
+        let val = val + val ; 
+        let val = val + val ; 
+        let val = val + val ; 
+        return val+val; 
+    }
+    function int shiftLeft5(int val){
+        let val = val + val ; 
+        let val = val + val ; 
+        let val = val + val ; 
+        let val = val + val ; 
+        return val+val; 
+    }
+    function int shiftLeft6(int val){
+        let val = val + val ; 
+        let val = val + val ; 
+        let val = val + val ; 
+        let val = val + val ; 
+        let val = val + val ; 
+        return val+val; 
+    }
+    function int shiftLeft7(int val){
+        let val = val + val ; 
+        let val = val + val ; 
+        let val = val + val ; 
+        let val = val + val ; 
+        let val = val + val ; 
+        let val = val + val ; 
+        return val+val; 
+    }
+    function int shiftLeft8(int val){
+        let val = val + val ; 
+        let val = val + val ; 
+        let val = val + val ; 
+        let val = val + val ; 
+        let val = val + val ; 
+        let val = val + val ; 
+        let val = val + val ; 
+        return val+val; 
+    }
+
+
+
+    function int xor(int a , int b ){
+        return ((~a)&b) | ((~b)&a) ; 
+    }
+
+
+}

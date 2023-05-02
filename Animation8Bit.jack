@@ -1,0 +1,26 @@
+class Animation8Bit{
+    function void draw8BitLow(int memAddress , int x1,int x2 , int x3 , int x4, int x5 , int x6 , int x7 ,int x8){
+        do Memory.poke(memAddress+0,ExtendedMath.shiftLeft8(Memory.peek(memAddress+0))   | x1);
+        do Memory.poke(memAddress+32, ExtendedMath.shiftLeft8(Memory.peek(memAddress+32))  | x2);
+        do Memory.poke(memAddress+64, ExtendedMath.shiftLeft8(Memory.peek(memAddress+64)) | x3);
+        do Memory.poke(memAddress+96, ExtendedMath.shiftLeft8(Memory.peek(memAddress+96))| x4);
+        do Memory.poke(memAddress+128, ExtendedMath.shiftLeft8(Memory.peek(memAddress+128))| x5);
+        do Memory.poke(memAddress+160, ExtendedMath.shiftLeft8(Memory.peek(memAddress+160))| x6);
+        do Memory.poke(memAddress+192,ExtendedMath.shiftLeft8(Memory.peek(memAddress+192)) | x7);
+        do Memory.poke(memAddress+224, ExtendedMath.shiftLeft8(Memory.peek(memAddress+224)) | x8);
+        return ;
+    }
+
+    function void draw8BitHigh(int memAddress , int x1,int x2 , int x3 , int x4, int x5 , int x6 , int x7 ,int x8){
+        do Memory.poke(memAddress+0, ExtendedMath.shiftLeft8(x1)| Memory.peek(memAddress+0));
+        do Memory.poke(memAddress+32, ExtendedMath.shiftLeft8(x2)  | Memory.peek(memAddress+32));
+        do Memory.poke(memAddress+64, ExtendedMath.shiftLeft8(x3)  | Memory.peek(memAddress+64));
+        do Memory.poke(memAddress+96,  ExtendedMath.shiftLeft8(x4) | Memory.peek(memAddress+96));
+        do Memory.poke(memAddress+128,ExtendedMath.shiftLeft8(x5) | Memory.peek(memAddress+128));
+        do Memory.poke(memAddress+160,ExtendedMath.shiftLeft8(x6) | Memory.peek(memAddress+160));
+        do Memory.poke(memAddress+192, ExtendedMath.shiftLeft8(x7) | Memory.peek(memAddress+192));
+        do Memory.poke(memAddress+224,ExtendedMath.shiftLeft8(x8) | Memory.peek(memAddress+224));
+        return ; 
+    }
+
+}

@@ -1,0 +1,32 @@
+class Levels{
+    static int sizeRow,  sizeColumn; 
+    static Array level ; 
+    function void init(){
+        let sizeRow = 25 ; 
+        let sizeColumn = 64 ; 
+        let level = Array.new(Math.multiply(sizeRow, sizeColumn)); 
+        return ; 
+    }
+    function void LoadLevel1(){
+            var int i,j,type ; 
+            var bool ff ; 
+            let i =0 ; 
+            let ff = false ; 
+            while(i<sizeRow){
+                let j=0; 
+                while(j <sizeColumn ){
+                    let type  = Math.min(2,j & 3) ; 
+                    let ff = ~ff; 
+                    let level[j + Math.multiply(i,64)]=type;
+                    let j=j+1; 
+                }
+                let i=i+1; 
+            }
+            return ; 
+    }
+    function Array getLevel(){
+        return level ; 
+    }
+
+
+}

@@ -1,0 +1,71 @@
+class Grid{
+    field Array grid ; 
+    field int rows,cols;
+    function void init(){
+        return ; 
+    }
+    constructor Grid new(int Bx , int By ){
+        var int i,j ; 
+        var bool ff; 
+        var Block block;
+        let grid = Array.new(1024);
+        let i =0 ; 
+        let ff = false ; 
+        while(i<25){
+            let j=0; 
+            while(j < 64 ){
+            let block = Block.new(Math.multiply(8,j) , Math.multiply(8,i) , Math.min(2,j & 3) );
+            do block.draw(ff);
+            let ff = ~ff; 
+            let grid[j + Math.multiply(i,64)]=block;
+            let j=j+1; 
+            }
+            let i=i+1; 
+        }
+    return this;
+    }
+    method void draw(){
+        var Block block ; 
+        var int i,j ;
+        var bool ff; 
+        let i = 0;
+        let ff=false;
+        while(i<rows){
+            let j=0; 
+            while(j < cols ){
+                let block = grid[j + Math.multiply(i,cols)]; 
+                do block.draw(ff);
+                let ff = ~ff; 
+                let j=j+1; 
+        }
+        let i=i+1; 
+        }
+        return;
+    }
+    method void erase(){
+        var Block block ; 
+        var int i,j ;
+        var bool ff; 
+        let i = 0;
+        let ff=false;
+        while(i<rows){
+            let j=0; 
+            while(j < cols ){
+                let block = grid[j + Math.multiply(i,64)] ; 
+                do block.erase(ff);
+                let ff = ~ff; 
+                let j=j+1; 
+        }
+        let i=i+1; 
+        }
+        return;
+    }
+    method void drawIndex(int row , int col ){
+        return ; 
+    }
+    method void eraseIndex(int row , int col ){
+        return ;
+    }
+
+
+}

@@ -1,0 +1,65 @@
+function Bar.new 0
+push constant 3
+call Memory.alloc 1
+pop pointer 0
+push argument 0
+push argument 1
+call Point.new 2
+pop this 0
+push argument 2
+pop this 1
+push argument 3
+pop this 2
+push pointer 0
+return
+function Bar.moveLeft 0
+push argument 0
+pop pointer 0
+push this 0
+push constant 0
+push this 0
+call Point.getX 1
+push constant 10
+sub
+call Math.max 2
+call Point.setX 2
+pop temp 0
+push constant 0
+return
+function Bar.moveRight 0
+push argument 0
+pop pointer 0
+push this 0
+push this 0
+call Point.getX 1
+push constant 10
+add
+push constant 511
+call Math.min 2
+call Point.setX 2
+pop temp 0
+push constant 0
+return
+function Bar.draw 0
+push argument 0
+pop pointer 0
+push this 0
+call Point.getX 1
+push constant 0
+call Math.max 2
+push this 0
+call Point.getY 1
+push constant 511
+push this 0
+call Point.getX 1
+push this 1
+add
+call Math.min 2
+push this 0
+call Point.getY 1
+push this 2
+add
+call Screen.drawRectangle 4
+pop temp 0
+push constant 0
+return

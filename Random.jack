@@ -1,0 +1,16 @@
+// The Idea is taken from mario on the old consoles - I will fetch some random const memory address and take the value and it should be pretty random 
+
+class Random{
+    static int randomAdress ; 
+    function void init(){
+        // 16384 + 127 * 32(words) + 16(words) = 20464
+        let randomAdress = 20464 ; 
+        return ; 
+    }
+    function int getRandomAdress(){
+        // 1111 - 0xF 
+        // The memory size is : 32,768 words (16bit)
+        return Memory.peek(randomAdress) & 15 ;
+    }
+}
+

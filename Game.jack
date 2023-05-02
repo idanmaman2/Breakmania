@@ -1,0 +1,120 @@
+class Game{
+    field List balls ; 
+    field Bar bar ; 
+    field Grid grid ; 
+    static int  Px , Py ; 
+    static int BPx , BPy ;  
+    static int ballRadius ; 
+    static int barHeight , barWidth ;
+    function void init(){
+        let Px = 512 ; // width of the screen 
+        let Py = 256 ; // height of the screen 
+        let BPx = 256; // middle of 511
+        let BPy = 216; // 256 - 8 * 5  
+        let ballRadius = 2; 
+        let barHeight = Bar.getSizeHeight(); 
+        let barWidth = Bar.getSizeWidth(); 
+        return ; 
+    }
+    constructor Game new(){
+        var Ball ball1,ball2;
+        let ball1 = Ball.new(ballRadius); 
+        do ball1.setLocation(BPx,BPy);
+        let ball2 = Ball.new(ballRadius); 
+        do ball2.setLocation(BPx + 50,BPy);
+        let bar = Bar.new(BPx,BPy);       
+        let balls = List.new(ball1 ,List.new(ball2 ,null) ); 
+        let grid = Grid.new(64,25); // how many blocks we want in the game
+        do grid.draw(); 
+        return this ; 
+    }
+
+    method void frame(int keyPressed){
+        var Ball ballTMP ; 
+        var List index; 
+        var int nX , nY , bX;
+        let index = balls; 
+        let bX = bar.getLocationX() ;
+        do Screen.setColor(false); //erase
+        while(~(index = null)){
+            let ballTMP = index.getCurrentValue(); 
+            do ballTMP.draw(); 
+            let index = index.getCurrentNext(); 
+            
+        }
+        do Screen.setColor(true); //start drawing
+        if( keyPressed = 130 ){//left 
+            do bar.erase(); 
+            do bar.moveLeft() ; 
+            let bX = bar.getLocationX() ;            
+        }
+        if(keyPressed = 132 ){ //right 
+            do bar.erase(); 
+            do bar.moveRight() ;
+            let bX = bar.getLocationX() ;
+        }
+        let index = balls; 
+        while(~(index = null)){
+            let ballTMP = index.getCurrentValue(); 
+            let nX = ballTMP.getNextLocationX();
+            let nY = ballTMP.getNextLocationY();
+            if((nX + ballRadius) > Px  ){
+                do ballTMP.chageDirY();
+                let nX = Px - ballRadius ; 
+                let nY = ballTMP.getNextLocationY();
+            }
+            if((nX-ballRadius) < 0){
+                do ballTMP.chageDirY();
+                let nX = ballRadius ; 
+                let nX = nX + Random.getRandomAdress(); 
+                let nY = ballTMP.getNextLocationY();
+            }
+            if((nY+ballRadius) > Py ){
+                do ballTMP.chageDirX(); 
+                let nX = ballTMP.getNextLocationX();
+                let nY = Py - ballRadius ;
+            }
+            if((nY-ballRadius) < 0 ){
+                do ballTMP.chageDirX();
+                let nX = ballTMP.getNextLocationX();
+                let nY = ballRadius;
+            }
+           
+            if( (nX > (bX-ballRadius) ) & (nX <  (barWidth + bX + ballRadius)) & (nY > (BPy-ballRadius)) & (nY < (barHeight + BPy + ballRadius)) ){
+                 do ballTMP.chageDirX();
+                let nX = ballTMP.getNextLocationX();
+                let nY = BPy - ballRadius;
+            }
+            do ballTMP.setLocation(Math.min(Px - ballRadius - 1  ,Math.max(nX,ballRadius)),(Math.min(Py -ballRadius -1  , Math.max(nY,ballRadius))));
+            do ballTMP.draw(); 
+            let index = index.getCurrentNext(); 
+        }
+        do bar.draw();
+
+        return ; 
+    }
+
+    method void play(){
+        var int keyPressed,i; 
+        let i =0 ;
+        while(true){
+            let keyPressed = Keyboard.keyPressed();
+            do frame(keyPressed);
+            let i = i+1; 
+            do Sys.wait(80);
+        }
+        return ; 
+    }
+
+    method void dispose(){
+        do balls.dispose(); 
+        do Memory.deAlloc(bar); 
+        do Memory.deAlloc(grid);
+        return ; 
+    }
+
+
+
+
+
+}

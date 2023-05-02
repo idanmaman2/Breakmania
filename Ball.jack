@@ -1,0 +1,71 @@
+class Ball {
+    static int PX , PY ; 
+    field int radius;
+    field Point loc ; 
+    field Vector dir ;  
+    function void init(){
+        let PX = 511 ; 
+        let PY = 255;  
+        return ; 
+    }
+    constructor Ball new(int Bradius){
+        let radius = Bradius ;
+        let loc = Point.new(0,0); 
+        let dir = Vector.new(1,-1);  
+        return this;
+    }
+    method void draw(){
+        do Screen.drawCircle(loc.getX(),loc.getY(),radius);
+        return ;
+    }
+    method void setLocation(int Bx , int By){
+        do loc.setLocation(Bx,By);
+        return ;
+    }
+    method void setDir(int Bx , int By){
+        do dir.setDir(Bx,By);
+        return ;
+    }
+    method int getNextLocationX(){
+        return loc.getX()+Math.multiply(15, dir.getX());
+    }
+    method void Move(){
+        do loc.setX(getLocationX());
+        do loc.setY(getLocationY());
+        return ; 
+    }
+    method int getNextLocationY(){
+        return loc.getY()+Math.multiply(15 , dir.getY());
+    }
+    method void chageDirX(){
+        do dir.reflectionX(); 
+        return ; 
+    }
+    method void chageDirY(){
+        do dir.reflectionY(); 
+        return ; 
+    }
+    method Point getLocation(){
+        return loc ; 
+    }
+    method int getLocationX(){
+        return loc.getY();
+    }
+    method int getLocationY(){
+        return loc.getX() ;
+    }
+    method int getDirX(){
+        return dir.getX() ;
+    }
+    method int getDirY(){
+        return dir.getY() ;
+    }
+    method void setDirX(int Bx){
+        do dir.setX(Bx);
+        return ; 
+    }
+    method void setDirY(int By){
+        do dir.setY(By);
+        return ; 
+    }
+}

@@ -1,0 +1,20 @@
+// this file created by the one and only IDHM
+
+class Main {
+   function void main() {
+    var Game game ; 
+    do Ball.init();
+    do Random.init();
+    do Grid.init(); 
+    do Game.init();
+    do Levels.init(); 
+    let game  = Game.new();
+    do game.play();
+    do game.dispose();
+    
+
+    
+ 
+      return;
+   }
+}

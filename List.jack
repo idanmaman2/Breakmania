@@ -1,0 +1,35 @@
+class List{
+    field List next ; 
+    field int data ;
+
+    constructor List new (int car, List cdr) {
+        let data = car;
+        let next = cdr;
+        return this;
+    }
+
+
+    method List getCurrentNext(){
+        return next ; 
+    }
+
+
+    method int getCurrentValue(){
+        return data ; 
+    }
+
+    method bool  thereIsNext(){
+        return next = null ; 
+    }
+
+
+
+    method void dispose(){
+        if (~(next = null)) { //recursive dispose 
+            do next.dispose();
+        }
+        do Memory.deAlloc(this);
+        return;
+    }
+
+}

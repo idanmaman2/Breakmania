@@ -1,0 +1,43 @@
+class Vector{
+    field int x,y ; 
+    constructor Vector new(int Bx , int By){
+        let x = Bx ; 
+        let y = By ; 
+        return this ; 
+    }
+    method void setY(int By){
+        let y = By ; 
+        return ; 
+    }
+    method void setX(int Bx){
+        let x = Bx ; 
+        return ; 
+    }
+    method void setDir(int Bx, int By){
+        let x = Bx ; 
+        let y = By ; 
+        return ; 
+    }
+    method int getX(){
+        return x ; 
+
+    }
+    method int getY(){
+        return y ; 
+    }
+    method void reflectionX(){
+        // evrthing is aligned to the oclidain cordinates - so if evrything is straigh it super easy calcs 
+        let y =  -y  ; 
+        return  ;
+    }
+
+    method void reflectionY(){
+        // evrthing is aligned to the oclidain cordinates - so if evrything is straigh it super easy calcs 
+       let x =  -x ; 
+       return  ; 
+    }
+
+
+
+
+}

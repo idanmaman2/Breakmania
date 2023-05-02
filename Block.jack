@@ -1,0 +1,60 @@
+class Block{
+    field int memAddress ,  type ;
+    field bool High ; 
+    constructor Block new(int Bx , int By , int Btype  ){
+        let memAddress = 16384 + Math.divide(Bx,16) + Math.multiply(By,32) ; 
+        let type = Btype ; 
+        return this ; 
+    }
+    method  void drawImmutable(bool High) {
+        if(High = true ){
+            do Animation8Bit.draw8BitHigh(memAddress, 225,195,165,153,153,165,195,255);
+        }
+        if(High = false){
+        do Animation8Bit.draw8BitLow(memAddress,225,195,165,153,153,165,195,255);
+        }
+        return;
+    }
+    method void drawMutable(bool High) {
+        if(High = true ){
+            do Animation8Bit.draw8BitHigh(memAddress,225,129,189,165,165,189,129,255);
+        }
+        if(High = false){
+            do Animation8Bit.draw8BitLow(memAddress,225,129,189,165,165,189,129,255);
+        }
+            return;
+        }
+        method void drawDouble(bool High) {
+        if(High = true ){
+            do Animation8Bit.draw8BitHigh(memAddress,225,153,161,145,137,185,255,255);
+        }
+        if(High = false){
+            do Animation8Bit.draw8BitLow(memAddress,225,153,161,145,137,185,255,255);
+        }
+
+        return;
+    }
+
+    method void draw(bool High){
+        if(type = 0 ){
+            do drawImmutable(High); 
+        }
+        if(type = 2){
+            do drawMutable(High) ; 
+        }
+        if(type =1 ){
+            do drawDouble(High);
+        }
+        return;
+    }
+    method void erase(bool High){
+        if(High = true ){
+            do Animation8Bit.draw8BitHigh(memAddress,0,0,0,0,0,0,0,0);
+        }
+        if(High = false){
+            do Animation8Bit.draw8BitLow(memAddress,0,0,0,0,0,0,0,0);
+        }
+        return;
+
+    }
+}

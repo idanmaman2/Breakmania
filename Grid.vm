@@ -1,0 +1,188 @@
+function Grid.init 0
+push constant 0
+return
+function Grid.new 4
+push constant 3
+call Memory.alloc 1
+pop pointer 0
+push constant 1024
+call Array.new 1
+pop this 0
+push constant 0
+pop local 0
+push constant 0
+pop local 2
+label WHILE_EXP0
+push local 0
+push constant 25
+lt
+not
+if-goto WHILE_END0
+push constant 0
+pop local 1
+label WHILE_EXP1
+push local 1
+push constant 64
+lt
+not
+if-goto WHILE_END1
+push constant 8
+push local 1
+call Math.multiply 2
+push constant 8
+push local 0
+call Math.multiply 2
+push constant 2
+push local 1
+push constant 3
+and
+call Math.min 2
+call Block.new 3
+pop local 3
+push local 3
+push local 2
+call Block.draw 2
+pop temp 0
+push local 2
+not
+pop local 2
+push local 1
+push local 0
+push constant 64
+call Math.multiply 2
+add
+push this 0
+add
+push local 3
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push local 1
+push constant 1
+add
+pop local 1
+goto WHILE_EXP1
+label WHILE_END1
+push local 0
+push constant 1
+add
+pop local 0
+goto WHILE_EXP0
+label WHILE_END0
+push pointer 0
+return
+function Grid.draw 4
+push argument 0
+pop pointer 0
+push constant 0
+pop local 1
+push constant 0
+pop local 3
+label WHILE_EXP0
+push local 1
+push this 1
+lt
+not
+if-goto WHILE_END0
+push constant 0
+pop local 2
+label WHILE_EXP1
+push local 2
+push this 2
+lt
+not
+if-goto WHILE_END1
+push local 2
+push local 1
+push this 2
+call Math.multiply 2
+add
+push this 0
+add
+pop pointer 1
+push that 0
+pop local 0
+push local 0
+push local 3
+call Block.draw 2
+pop temp 0
+push local 3
+not
+pop local 3
+push local 2
+push constant 1
+add
+pop local 2
+goto WHILE_EXP1
+label WHILE_END1
+push local 1
+push constant 1
+add
+pop local 1
+goto WHILE_EXP0
+label WHILE_END0
+push constant 0
+return
+function Grid.erase 4
+push argument 0
+pop pointer 0
+push constant 0
+pop local 1
+push constant 0
+pop local 3
+label WHILE_EXP0
+push local 1
+push this 1
+lt
+not
+if-goto WHILE_END0
+push constant 0
+pop local 2
+label WHILE_EXP1
+push local 2
+push this 2
+lt
+not
+if-goto WHILE_END1
+push local 2
+push local 1
+push constant 64
+call Math.multiply 2
+add
+push this 0
+add
+pop pointer 1
+push that 0
+pop local 0
+push local 0
+push local 3
+call Block.erase 2
+pop temp 0
+push local 3
+not
+pop local 3
+push local 2
+push constant 1
+add
+pop local 2
+goto WHILE_EXP1
+label WHILE_END1
+push local 1
+push constant 1
+add
+pop local 1
+goto WHILE_EXP0
+label WHILE_END0
+push constant 0
+return
+function Grid.drawIndex 0
+push argument 0
+pop pointer 0
+push constant 0
+return
+function Grid.eraseIndex 0
+push argument 0
+pop pointer 0
+push constant 0
+return
