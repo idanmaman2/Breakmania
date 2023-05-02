@@ -1,14 +1,163 @@
 function ExtendedMath.shiftRightOne 0
 push constant 1
 return
-function ExtendedMath.shiftLeftOne 0
-push constant 1
-return
 function ExtendedMath.rolOne 0
 push constant 1
 return
 function ExtendedMath.rorOne 0
 push constant 1
+return
+function ExtendedMath.shiftLeft1 0
+push argument 0
+push argument 0
+add
+return
+function ExtendedMath.shiftLeft2 0
+push argument 0
+push argument 0
+add
+pop argument 0
+push argument 0
+push argument 0
+add
+return
+function ExtendedMath.shiftLeft3 0
+push argument 0
+push argument 0
+add
+pop argument 0
+push argument 0
+push argument 0
+add
+pop argument 0
+push argument 0
+push argument 0
+add
+return
+function ExtendedMath.shiftLeft4 0
+push argument 0
+push argument 0
+add
+pop argument 0
+push argument 0
+push argument 0
+add
+pop argument 0
+push argument 0
+push argument 0
+add
+pop argument 0
+push argument 0
+push argument 0
+add
+return
+function ExtendedMath.shiftLeft5 0
+push argument 0
+push argument 0
+add
+pop argument 0
+push argument 0
+push argument 0
+add
+pop argument 0
+push argument 0
+push argument 0
+add
+pop argument 0
+push argument 0
+push argument 0
+add
+pop argument 0
+push argument 0
+push argument 0
+add
+return
+function ExtendedMath.shiftLeft6 0
+push argument 0
+push argument 0
+add
+pop argument 0
+push argument 0
+push argument 0
+add
+pop argument 0
+push argument 0
+push argument 0
+add
+pop argument 0
+push argument 0
+push argument 0
+add
+pop argument 0
+push argument 0
+push argument 0
+add
+pop argument 0
+push argument 0
+push argument 0
+add
+return
+function ExtendedMath.shiftLeft7 0
+push argument 0
+push argument 0
+add
+pop argument 0
+push argument 0
+push argument 0
+add
+pop argument 0
+push argument 0
+push argument 0
+add
+pop argument 0
+push argument 0
+push argument 0
+add
+pop argument 0
+push argument 0
+push argument 0
+add
+pop argument 0
+push argument 0
+push argument 0
+add
+pop argument 0
+push argument 0
+push argument 0
+add
+return
+function ExtendedMath.shiftLeft8 0
+push argument 0
+push argument 0
+add
+pop argument 0
+push argument 0
+push argument 0
+add
+pop argument 0
+push argument 0
+push argument 0
+add
+pop argument 0
+push argument 0
+push argument 0
+add
+pop argument 0
+push argument 0
+push argument 0
+add
+pop argument 0
+push argument 0
+push argument 0
+add
+pop argument 0
+push argument 0
+push argument 0
+add
+pop argument 0
+push argument 0
+push argument 0
+add
 return
 function ExtendedMath.xor 0
 push argument 0

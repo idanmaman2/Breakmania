@@ -16,7 +16,8 @@ push constant 0
 call Point.new 2
 pop this 1
 push constant 1
-push constant 2
+push constant 1
+neg
 call Vector.new 2
 pop this 2
 push pointer 0
@@ -53,140 +54,103 @@ call Vector.setDir 3
 pop temp 0
 push constant 0
 return
-function Ball.shoot 2
+function Ball.getNextLocationX 0
 push argument 0
 pop pointer 0
 push this 1
 call Point.getX 1
-push constant 10
+push constant 15
 push this 2
 call Vector.getX 1
 call Math.multiply 2
 add
-pop local 0
+return
+function Ball.Move 0
+push argument 0
+pop pointer 0
 push this 1
-call Point.getY 1
-push constant 10
-push this 2
-call Vector.getY 1
-call Math.multiply 2
-add
-pop local 1
-push local 0
-push this 0
-add
-push static 0
-gt
-if-goto IF_TRUE0
-goto IF_FALSE0
-label IF_TRUE0
-push this 2
-call Vector.reflectionY 1
-pop temp 0
-push static 0
-push this 0
-sub
-pop local 0
-push this 1
-call Point.getY 1
-push constant 10
-push this 2
-call Vector.getY 1
-call Math.multiply 2
-add
-pop local 1
-label IF_FALSE0
-push local 0
-push this 0
-sub
-push constant 1
-lt
-if-goto IF_TRUE1
-goto IF_FALSE1
-label IF_TRUE1
-push this 2
-call Vector.reflectionY 1
-pop temp 0
-push this 0
-pop local 0
-push local 0
-call Random.getRandomAdress 0
-add
-pop local 0
-push this 1
-call Point.getY 1
-push constant 10
-push this 2
-call Vector.getY 1
-call Math.multiply 2
-add
-pop local 1
-label IF_FALSE1
-push local 1
-push this 0
-add
-push static 1
-gt
-if-goto IF_TRUE2
-goto IF_FALSE2
-label IF_TRUE2
-push this 2
-call Vector.reflectionX 1
-pop temp 0
-push this 1
-call Point.getX 1
-push constant 10
-push this 2
-call Vector.getX 1
-call Math.multiply 2
-add
-pop local 0
-push static 1
-push this 0
-sub
-pop local 1
-label IF_FALSE2
-push local 1
-push this 0
-sub
-push constant 1
-lt
-if-goto IF_TRUE3
-goto IF_FALSE3
-label IF_TRUE3
-push this 2
-call Vector.reflectionX 1
-pop temp 0
-push this 1
-call Point.getX 1
-push constant 10
-push this 2
-call Vector.getX 1
-call Math.multiply 2
-add
-pop local 0
-push this 0
-pop local 1
-label IF_FALSE3
-push this 1
-push static 0
-push this 0
-sub
-push local 0
-push this 0
-call Math.max 2
-call Math.min 2
+push pointer 0
+call Ball.getLocationX 1
 call Point.setX 2
 pop temp 0
 push this 1
-push static 1
-push this 0
-sub
-push local 1
-push this 0
-call Math.max 2
-call Math.min 2
+push pointer 0
+call Ball.getLocationY 1
 call Point.setY 2
+pop temp 0
+push constant 0
+return
+function Ball.getNextLocationY 0
+push argument 0
+pop pointer 0
+push this 1
+call Point.getY 1
+push constant 15
+push this 2
+call Vector.getY 1
+call Math.multiply 2
+add
+return
+function Ball.chageDirX 0
+push argument 0
+pop pointer 0
+push this 2
+call Vector.reflectionX 1
+pop temp 0
+push constant 0
+return
+function Ball.chageDirY 0
+push argument 0
+pop pointer 0
+push this 2
+call Vector.reflectionY 1
+pop temp 0
+push constant 0
+return
+function Ball.getLocation 0
+push argument 0
+pop pointer 0
+push this 1
+return
+function Ball.getLocationX 0
+push argument 0
+pop pointer 0
+push this 1
+call Point.getY 1
+return
+function Ball.getLocationY 0
+push argument 0
+pop pointer 0
+push this 1
+call Point.getX 1
+return
+function Ball.getDirX 0
+push argument 0
+pop pointer 0
+push this 2
+call Vector.getX 1
+return
+function Ball.getDirY 0
+push argument 0
+pop pointer 0
+push this 2
+call Vector.getY 1
+return
+function Ball.setDirX 0
+push argument 0
+pop pointer 0
+push this 2
+push argument 1
+call Vector.setX 2
+pop temp 0
+push constant 0
+return
+function Ball.setDirY 0
+push argument 0
+pop pointer 0
+push this 2
+push argument 1
+call Vector.setY 2
 pop temp 0
 push constant 0
 return
