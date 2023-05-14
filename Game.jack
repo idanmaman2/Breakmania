@@ -6,6 +6,7 @@ class Game{
     static int BPx , BPy ;  
     static int ballRadius ; 
     static int barHeight , barWidth ;
+    static int frameRateTime ; // simple calc of  1 divided by the  estimated top number of images per seconds Multiplied by 1000 rounded to the to tenth number 
     function void init(){
         let Px = 512 ; // width of the screen 
         let Py = 256 ; // height of the screen 
@@ -14,24 +15,29 @@ class Game{
         let ballRadius = 2; 
         let barHeight = Bar.getSizeHeight(); 
         let barWidth = Bar.getSizeWidth(); 
+        let frameRateTime = 80; //frame Rate is about 13 ...
         return ; 
     }
     constructor Game new(){
         var Ball ball1,ball2;
-        let ball1 = Ball.new(ballRadius); 
-        do ball1.setLocation(BPx,BPy);
-        let ball2 = Ball.new(ballRadius); 
-        do ball2.setLocation(BPx + 50,BPy);
+        var int i ; 
+        let i=0 ; 
+        while(i<20){
+            let ball1 = Ball.new(ballRadius); 
+            do ball1.setLocation(BPx + Math.multiply(i,2) ,BPy);
+            let balls = List.new(ball1 ,balls ); 
+            let i = i+ 1 ; 
+        }
         let bar = Bar.new(BPx,BPy);       
-        let balls = List.new(ball1 ,List.new(ball2 ,null) ); 
+       
         let grid = Grid.new(64,25); // how many blocks we want in the game
-        do grid.draw(); 
+        //do grid.draw(); 
         return this ; 
     }
 
-    method void frame(int keyPressed){
+    method bool frame(int keyPressed){
         var Ball ballTMP ; 
-        var List index; 
+        var List index,prev; 
         var int nX , nY , bX;
         let index = balls; 
         let bX = bar.getLocationX() ;
@@ -53,6 +59,7 @@ class Game{
             do bar.moveRight() ;
             let bX = bar.getLocationX() ;
         }
+        let prev = null ; 
         let index = balls; 
         while(~(index = null)){
             let ballTMP = index.getCurrentValue(); 
@@ -70,9 +77,20 @@ class Game{
                 let nY = ballTMP.getNextLocationY();
             }
             if((nY+ballRadius) > Py ){
-                do ballTMP.chageDirX(); 
-                let nX = ballTMP.getNextLocationX();
-                let nY = Py - ballRadius ;
+                if(balls.getCurrentNext() = null){
+                    do balls.dispose();
+                    return false ; 
+                }
+                if(prev = null){
+                    let balls = index.getCurrentNext() ; 
+                }
+                if (~(prev =null)){
+                    do prev.setCurrentNext(index.getCurrentNext());
+                }
+                do Screen.setColor(false); //erase
+                do ballTMP.draw();
+                do Memory.deAlloc(ballTMP);
+                
             }
             if((nY-ballRadius) < 0 ){
                 do ballTMP.chageDirX();
@@ -88,26 +106,31 @@ class Game{
             do ballTMP.setLocation(Math.min(Px - ballRadius - 1  ,Math.max(nX,ballRadius)),(Math.min(Py -ballRadius -1  , Math.max(nY,ballRadius))));
             do ballTMP.draw(); 
             let index = index.getCurrentNext(); 
+            let prev = index ;
         }
         do bar.draw();
 
-        return ; 
+        return true; 
     }
 
-    method void play(){
+    method bool play(){
         var int keyPressed,i; 
+        var bool res ; 
         let i =0 ;
         while(true){
             let keyPressed = Keyboard.keyPressed();
-            do frame(keyPressed);
+            let res =  frame(keyPressed);
+            if(~res){
+                return false ;
+            }
             let i = i+1; 
             do Sys.wait(80);
         }
-        return ; 
+        return true ; 
     }
 
-    method void dispose(){
-        do balls.dispose(); 
+    method void dispose(){ 
+        //do grid.dispose();
         do Memory.deAlloc(bar); 
         do Memory.deAlloc(grid);
         return ; 

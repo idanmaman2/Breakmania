@@ -18,6 +18,10 @@ class List{
         return data ; 
     }
 
+    method void setCurrentNext(List Bnext){
+        let next =Bnext ; 
+        return ;
+    }
     method bool  thereIsNext(){
         return next = null ; 
     }

@@ -3,18 +3,90 @@
 class Main {
    function void main() {
     var Game game ; 
+    var int startKey ; 
+    var int level ; 
+    var bool winned ; 
+    var int i ; 
+    var Block logo ; 
+ 
+    do ExtendedMath.init(); 
+ 
+
+
+
     do Ball.init();
     do Random.init();
     do Grid.init(); 
     do Game.init();
     do Levels.init(); 
-    let game  = Game.new();
-    do game.play();
-    do game.dispose();
-    
 
-    
- 
+   let startKey = 0 ; 
+   let level = 0 ; 
+    while(true){
+   do Screen.clearScreen();
+    do Output.moveCursor(0,18);
+    do Output.printString("BreakMania by Idan Maman");
+
+   let i=0 ; 
+   while(i < 32){
+      let logo = Block.new(Math.multiply(i,16) , 88 ,  Math.min(2,i & 3) ) ; 
+      do logo.draw(true);
+      do Memory.deAlloc(logo);
+      let logo = Block.new(Math.multiply(i,16) , 200 ,  Math.min(2,i & 3) ) ; 
+      do logo.draw(false);
+      do Memory.deAlloc(logo);
+      let i=i+1;
+   }
+
+    do Output.moveCursor(12,23);
+    do Output.printString("< Level - ");
+    do Output.printInt(level); 
+    do Output.printString(" >");
+    while(~(startKey = 128)){
+   
+       let startKey = Keyboard.keyPressed(); 
+       if(startKey = 130){
+         let level = level -1 ; 
+       }
+       if(startKey = 132){
+         let level = level +1 ; 
+       }
+       if((startKey = 132) | (startKey = 130) ){
+         if(level > 9){
+            let level = 0 ; 
+         }
+         if(level < 0 ){
+            let level = 9 ;
+         }
+         do Output.moveCursor(12,23);
+         do Output.printString("< Level - ");
+         do Output.printInt(level); 
+         do Output.printString(" >");
+       }
+       
+
+
+
+      do Sys.wait(100);
+      }
+      do Screen.clearScreen();
+      let game  = Game.new();
+      let winned =  game.play();
+      do game.dispose();
+      do Screen.clearScreen();
+      do Output.moveCursor(12,13);
+      if(~winned){
+         do Output.printString("SUCKER - YOU CAN TRY AGAIN YOU IDIOT");
+      }
+      if(winned){
+         do Output.printString("WINNER - PRESS ENTER TO TRY AGAIN");
+      }
+      while(~(Keyboard.keyPressed() = 128)){}
+      let startKey =0 ; 
+      do Sys.wait(200);
+  
+    }
+
       return;
    }
 }

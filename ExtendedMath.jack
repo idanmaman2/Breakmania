@@ -2,9 +2,18 @@
 // so I will add shift left and right and I will add Random number , and fast multiply by 2,4,8,16,32,64,128,256 (most basic nums). 
 // This lang is realy sucks !! ;-) 
 class ExtendedMath{
-    function int shiftRightOne(){
-        return  1; 
+    function void init(){        
+        return ; 
     }
+
+    function int abs(int number ){
+        if(number < 0 ){
+            return -number ; 
+        }
+        return number ; 
+
+    }
+
     function int rolOne(){
         return 1; 
     }

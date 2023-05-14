@@ -1,0 +1,53 @@
+// SIMPLE VERSION OF FLOATING POING  
+//cause the hack process is suck(rimes) so I implmented a realy simple vestion(and not so accurate one) for my game
+// Because the hack processor is BigEndian so we can do cool shit 
+// so we will write - [15] - signed ? ,  [15-10]- The complete part ,[10-0] - the part after the point(not accurate cause we can only cound 4 numbers after the dot and we count until 1023 and not until 999)
+// let take an example for 4.256 
+// 0x6f00 - > 0110 1111 0000 0000 
+//        - > 1 00100 0100000000 
+
+
+
+
+class FloatingPoint {
+
+    function int  FloatingPointFactory (int value1 , int value2 , bool signed) {
+        var int value ; 
+        let value1 = ExtendedMath.abs(value1); 
+        let value2 = ExtendedMath.abs(value2);
+        let value = ExtendedMath.shiftLeft2(ExtendedMath.shiftLeft8(value1 & 31)) ; 
+        let value = value + (value2 & 1023) ; 
+        if (signed){
+           let value = - value ; 
+        }
+        return value; 
+    }
+    function  int  addInt(int Fvalue , int Ivalue){ // I need to think about it more ... 
+        return Fvalue +  ExtendedMath.shiftLeft2(ExtendedMath.shiftLeft8(Ivalue & 31))  ; 
+    }
+    function int getIValue(int value){
+        if(value < 0 ){
+            let value = Math.divide(-value, 1024 ) & 33 ; 
+            return -value ; 
+        }
+        return  Math.divide(value, 1024 ) & 33 ; 
+
+    }
+    method int getFValue(int value){
+        if(value < 0 ){
+            return -((-value) & 1023);
+        }
+        return value & 1023 ; 
+        
+    }
+    function int divInt(int value1 , int value2 ){
+        let value1 =ExtendedMath.shiftLeft2(ExtendedMath.shiftLeft8(value1)) ; // value1 * 1024
+        return Math.divide(value1,value2) ;
+    }
+    function int addFloat(int value , int addVal ){
+        return value + (addVal & 1023);
+    }
+
+
+
+} 

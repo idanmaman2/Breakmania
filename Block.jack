@@ -8,28 +8,28 @@ class Block{
     }
     method  void drawImmutable(bool High) {
         if(High = true ){
-            do Animation8Bit.draw8BitHigh(memAddress, 225,195,165,153,153,165,195,255);
+            do Animation8Bit.draw8BitHigh(memAddress, 255,195,165,153,153,165,195,255);
         }
         if(High = false){
-        do Animation8Bit.draw8BitLow(memAddress,225,195,165,153,153,165,195,255);
+        do Animation8Bit.draw8BitLow(memAddress,255,195,165,153,153,165,195,255);
         }
         return;
     }
     method void drawMutable(bool High) {
         if(High = true ){
-            do Animation8Bit.draw8BitHigh(memAddress,225,129,189,165,165,189,129,255);
+            do Animation8Bit.draw8BitHigh(memAddress,255,129,189,165,165,189,129,255);
         }
         if(High = false){
-            do Animation8Bit.draw8BitLow(memAddress,225,129,189,165,165,189,129,255);
+            do Animation8Bit.draw8BitLow(memAddress,255,129,189,165,165,189,129,255);
         }
             return;
         }
         method void drawDouble(bool High) {
         if(High = true ){
-            do Animation8Bit.draw8BitHigh(memAddress,225,153,161,145,137,185,255,255);
+            do Animation8Bit.draw8BitHigh(memAddress,255,153,161,145,137,185,255,255);
         }
         if(High = false){
-            do Animation8Bit.draw8BitLow(memAddress,225,153,161,145,137,185,255,255);
+            do Animation8Bit.draw8BitLow(memAddress,255,153,161,145,137,185,255,255);
         }
 
         return;
