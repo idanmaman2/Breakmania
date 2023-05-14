@@ -1,12 +1,6 @@
 class Block{
-    field int memAddress ,  type ;
-    field bool High ; 
-    constructor Block new(int Bx , int By , int Btype  ){
-        let memAddress = 16384 + Math.divide(Bx,16) + Math.multiply(By,32) ; 
-        let type = Btype ; 
-        return this ; 
-    }
-    method  void drawImmutable(bool High) {
+
+    function  void drawImmutable(bool High , int type ,int memAddress ) {
         if(High = true ){
             do Animation8Bit.draw8BitHigh(memAddress, 255,195,165,153,153,165,195,255);
         }
@@ -15,7 +9,7 @@ class Block{
         }
         return;
     }
-    method void drawMutable(bool High) {
+    function void drawMutable(bool High, int type ,int memAddress ) {
         if(High = true ){
             do Animation8Bit.draw8BitHigh(memAddress,255,129,189,165,165,189,129,255);
         }
@@ -24,7 +18,7 @@ class Block{
         }
             return;
         }
-        method void drawDouble(bool High) {
+    function void drawDouble(bool High, int type ,int memAddress ) {
         if(High = true ){
             do Animation8Bit.draw8BitHigh(memAddress,255,153,161,145,137,185,255,255);
         }
@@ -35,19 +29,25 @@ class Block{
         return;
     }
 
-    method void draw(bool High){
-        if(type = 0 ){
-            do drawImmutable(High); 
+    function void draw(bool High, int type, int Bx , int By ){
+        var int memAddress ;
+        let memAddress = 16384 + Math.divide(Bx,16) + Math.multiply(By,32) ; 
+        // type = 0 is empty block - erased ...
+        if(type = 1 ){
+            do Block.drawImmutable(High , type , memAddress); 
         }
-        if(type = 2){
-            do drawMutable(High) ; 
+        if(type =2 ){
+            do Block.drawDouble(High , type , memAddress);
         }
-        if(type =1 ){
-            do drawDouble(High);
+        if(type = 3){
+            do Block.drawMutable(High , type , memAddress) ; 
         }
+
         return;
     }
-    method void erase(bool High){
+    function void erase(bool High,int Bx, int By ){
+        var int memAddress ;
+        let memAddress = 16384 + Math.divide(Bx,16) + Math.multiply(By,32) ; 
         if(High = true ){
             do Animation8Bit.draw8BitHigh(memAddress,0,0,0,0,0,0,0,0);
         }

@@ -6,12 +6,17 @@ class Game{
     static int BPx , BPy ;  
     static int ballRadius ; 
     static int barHeight , barWidth ;
+    static int GridRows,GridCols,GridSizeY,GridSizeX;
     static int frameRateTime ; // simple calc of  1 divided by the  estimated top number of images per seconds Multiplied by 1000 rounded to the to tenth number 
     function void init(){
         let Px = 512 ; // width of the screen 
         let Py = 256 ; // height of the screen 
         let BPx = 256; // middle of 511
-        let BPy = 216; // 256 - 8 * 5  
+        let BPy = 216; // 256 - 8 * 5
+        let GridRows = 15 ; 
+        let GridCols =  64;
+        let GridSizeY = ExtendedMath.shiftLeft3(GridRows);
+        let GridSizeX =ExtendedMath.shiftLeft3(GridCols);
         let ballRadius = 2; 
         let barHeight = Bar.getSizeHeight(); 
         let barWidth = Bar.getSizeWidth(); 
@@ -19,10 +24,10 @@ class Game{
         return ; 
     }
     constructor Game new(){
-        var Ball ball1,ball2;
+        var Ball ball1;
         var int i ; 
         let i=0 ; 
-        while(i<20){
+        while(i<1){
             let ball1 = Ball.new(ballRadius); 
             do ball1.setLocation(BPx + Math.multiply(i,2) ,BPy);
             let balls = List.new(ball1 ,balls ); 
@@ -30,15 +35,21 @@ class Game{
         }
         let bar = Bar.new(BPx,BPy);       
        
-        let grid = Grid.new(64,25); // how many blocks we want in the game
-        //do grid.draw(); 
+        let grid = Grid.new(GridCols,GridRows); // how many blocks we want in the game
+        do grid.draw(); 
+        do grid.eraseIndex(0,0);
         return this ; 
     }
 
     method bool frame(int keyPressed){
-        var Ball ballTMP ; 
+        var Ball ballTMP , nBall; 
         var List index,prev; 
         var int nX , nY , bX;
+        var int  x0 , y0 , dx , dy , D , y ,x ;  
+        var int type ; 
+        var boolean ended ; 
+        var int stepY , stepX ; 
+        var int i , j ; 
         let index = balls; 
         let bX = bar.getLocationX() ;
         do Screen.setColor(false); //erase
@@ -65,6 +76,61 @@ class Game{
             let ballTMP = index.getCurrentValue(); 
             let nX = ballTMP.getNextLocationX();
             let nY = ballTMP.getNextLocationY();
+            let x0 = ballTMP.getLocationX(); 
+            let y0 = ballTMP.getLocationY(); 
+            let dx = nX - x0 ; 
+            let dy = nY - y0 ; 
+            let stepX = 1; 
+            let stepY = 1; 
+            let D = ExtendedMath.shiftLeft1(dy) - dx ; 
+            let y=y0 ; 
+            let x = x0 ; 
+            let ended = true ; 
+            if( x0 > nX){
+                let stepX = -1 ; 
+            }
+            if(y0 > nY ){
+                let stepY = -1 ;  
+            }
+            while((~(x = nX ) ) & (~(y = nY))& (ended) ){
+                if((x >  GridSizeX) | (y > GridSizeY)){
+                    let ended =false ; 
+                }
+                else{
+                let  j  = Math.divide(x+1,8); 
+                let i = Math.divide(y+1,8); 
+                let type =grid.getType(j,i);
+                if(~( type= 0 )){
+                    if((type = 1)){
+                        do grid.drawIndex(j,i);
+                    }
+                    else{
+                        do grid.eraseIndex(j,i);
+                    }
+                    if((x & 7 ) > (y & 7 )){
+                        do ballTMP.chageDirY();
+                    }
+                    else{
+                        do ballTMP.chageDirX();
+                    }
+                    //let nX = x ; 
+                    //let nY = y ; 
+                    let nX = x +1; 
+                    let nY  = y + 1  ; 
+                    let ended = false ; 
+                }
+                if(D > 0 ){
+                    let y = y+stepY ; 
+                    let D = D + ExtendedMath.shiftLeft1(dy) - ExtendedMath.shiftLeft1(dx);
+                }
+                else{
+                    let D =D + ExtendedMath.shiftLeft1(dy);
+                    let x = x+stepX ; 
+                }
+                }
+                
+           
+            } 
             if((nX + ballRadius) > Px  ){
                 do ballTMP.chageDirY();
                 let nX = Px - ballRadius ; 
@@ -97,7 +163,6 @@ class Game{
                 let nX = ballTMP.getNextLocationX();
                 let nY = ballRadius;
             }
-           
             if( (nX > (bX-ballRadius) ) & (nX <  (barWidth + bX + ballRadius)) & (nY > (BPy-ballRadius)) & (nY < (barHeight + BPy + ballRadius)) ){
                  do ballTMP.chageDirX();
                 let nX = ballTMP.getNextLocationX();

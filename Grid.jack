@@ -7,25 +7,22 @@ class Grid{
     constructor Grid new(int Bx , int By ){
         var int i,j ; 
         var bool ff; 
-        var Block block;
-        let grid = Array.new(1024);
+        let rows = By ; 
+        let cols = Bx ; 
+        let grid = Array.new(Math.multiply(Bx,By));
         let i =0 ; 
         let ff = false ; 
-        while(i<25){
+        while(i<By){
             let j=0; 
-            while(j < 64 ){
-            let block = Block.new(Math.multiply(8,j) , Math.multiply(8,i) , Math.min(2,j & 3) );
-            do block.draw(ff);
-            let ff = ~ff; 
-            let grid[j + Math.multiply(i,64)]=block;
-            let j=j+1; 
+            while(j < Bx ){
+                let grid[j + Math.multiply(i,64)]= Math.min(2,j & 3) + 1 ;
+                let j=j+1; 
             }
             let i=i+1; 
         }
     return this;
     }
     method void draw(){
-        var Block block ; 
         var int i,j ;
         var bool ff; 
         let i = 0;
@@ -33,9 +30,7 @@ class Grid{
         while(i<rows){
             let j=0; 
             while(j < cols ){
-                let block = grid[j + Math.multiply(i,cols)]; 
-                do block.draw(ff);
-                let ff = ~ff; 
+                do drawIndex(j,i);
                 let j=j+1; 
         }
         let i=i+1; 
@@ -43,28 +38,36 @@ class Grid{
         return;
     }
     method void erase(){
-        var Block block ; 
         var int i,j ;
-        var bool ff; 
         let i = 0;
-        let ff=false;
         while(i<rows){
             let j=0; 
             while(j < cols ){
-                let block = grid[j + Math.multiply(i,64)] ; 
-                do block.erase(ff);
-                let ff = ~ff; 
-                let j=j+1; 
+                do eraseIndex(j,i);
         }
         let i=i+1; 
         }
         return;
     }
-    method void drawIndex(int row , int col ){
+    method void drawIndex(int j , int i ){
+         do Block.draw((j&1) = 1, grid[j + Math.multiply(i,64)],Math.multiply(8,j) , Math.multiply(8,i));
+      
+
         return ; 
     }
-    method void eraseIndex(int row , int col ){
+    method void eraseIndex(int j , int i ){
+        let grid[j + Math.multiply(i,64)] = 0 ; 
+         do Block.erase((j&1) = 1,Math.multiply(8,j) , Math.multiply(8,i));
         return ;
+    }
+    method bool emptyGrid(){
+        return true ;
+    }
+    method void setValueIndex(){
+        return ; 
+    }
+    method int getType(int j, int i){
+        return grid[j + Math.multiply(i,64)]; 
     }
 
 

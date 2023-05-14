@@ -27,7 +27,7 @@ class Ball {
         return ;
     }
     method int getNextLocationX(){
-        return loc.getX()+Math.multiply(15, dir.getX());
+        return loc.getX()+ExtendedMath.shiftLeft4(dir.getX());
     }
     method void Move(){
         do loc.setX(getLocationX());
@@ -35,7 +35,7 @@ class Ball {
         return ; 
     }
     method int getNextLocationY(){
-        return loc.getY()+Math.multiply(15 , dir.getY());
+        return loc.getY()+ExtendedMath.shiftLeft4(dir.getY());
     }
     method void chageDirX(){
         do dir.reflectionX(); 
@@ -49,10 +49,10 @@ class Ball {
         return loc ; 
     }
     method int getLocationX(){
-        return loc.getY();
+        return loc.getX();
     }
     method int getLocationY(){
-        return loc.getX() ;
+        return loc.getY() ;
     }
     method int getDirX(){
         return dir.getX() ;

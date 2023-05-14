@@ -29,12 +29,8 @@ class Main {
 
    let i=0 ; 
    while(i < 32){
-      let logo = Block.new(Math.multiply(i,16) , 88 ,  Math.min(2,i & 3) ) ; 
-      do logo.draw(true);
-      do Memory.deAlloc(logo);
-      let logo = Block.new(Math.multiply(i,16) , 200 ,  Math.min(2,i & 3) ) ; 
-      do logo.draw(false);
-      do Memory.deAlloc(logo);
+      do Block.draw(true, Math.min(2,i & 3) + 1 , Math.multiply(i,16) , 88 );
+      do Block.draw(false,Math.min(2,i & 3)  + 1 ,Math.multiply(i,16) , 200);
       let i=i+1;
    }
 
@@ -76,7 +72,7 @@ class Main {
       do Screen.clearScreen();
       do Output.moveCursor(12,13);
       if(~winned){
-         do Output.printString("SUCKER - YOU CAN TRY AGAIN YOU IDIOT");
+         do Output.printString("LOSER - YOU CAN TRY AGAIN YOU IDIOT");
       }
       if(winned){
          do Output.printString("WINNER - PRESS ENTER TO TRY AGAIN");
