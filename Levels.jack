@@ -1,32 +1,125 @@
 class Levels{
-    static int sizeRow,  sizeColumn; 
-    static Array level ; 
+    static int BPx , BPy ,ballRadius ;  
+    field int sizeX,sizeY; 
+    field List balls ;  
+    field Grid grid ; 
     function void init(){
-        let sizeRow = 25 ; 
-        let sizeColumn = 64 ; 
-        let level = Array.new(Math.multiply(sizeRow, sizeColumn)); 
+        let BPx = 256; // middle of 511
+        let BPy = 216; // 256 - 8 * 5
+        let ballRadius = 2; 
         return ; 
     }
-    function void LoadLevel1(){
-            var int i,j,type ; 
-            var bool ff ; 
-            let i =0 ; 
-            let ff = false ; 
-            while(i<sizeRow){
-                let j=0; 
-                while(j <sizeColumn ){
-                    let type  = Math.min(2,j & 3) ; 
-                    let ff = ~ff; 
-                    let level[j + Math.multiply(i,64)]=type;
-                    let j=j+1; 
-                }
-                let i=i+1; 
+    constructor Levels new(int level){
+     if(level = 0 ){
+       do getLevel0();
+      }
+      if(level = 1 ){
+        do getLevel1();
+      }
+      if(level = 2 ){
+         do getLevel2();
+      }
+      if(level = 3 ){
+         do getLevel3();
+      }
+      if(level = 4 ){
+         do getLevel4();
+      }
+      if(level = 5 ){
+         do getLevel5();
+      }
+      if(level = 6 ){
+         do getLevel6();
+      }
+      if(level = 7 ){
+         do getLevel7();
+      }
+      if(level = 8 ){
+         do getLevel8();
+      }
+      if(level = 9 ){
+         do getLevel9();
+      }
+        return this; 
+    }
+
+    method int getSizeX(){
+        return sizeX; 
+    }
+    method int getSizeY(){
+        return sizeY; 
+    }
+    method List getBalls(){
+        return balls ; 
+    }
+    method Grid getGrid(){
+        return grid ; 
+    }
+
+    method void LevelFactory(int ballsNum , int BsizeX ,int BsizeY){
+        var int i,j ;
+        var Ball ball1 ; 
+        let sizeX = BsizeX ; 
+        let sizeY = BsizeY ; 
+        let grid = Grid.new(BsizeX , BsizeY);
+        while(i<ballsNum){
+            let ball1 = Ball.new(ballRadius); 
+            do ball1.setLocation(BPx + Math.multiply(i,2) ,BPy);
+            let balls = List.new(ball1 ,balls ); 
+            let i = i+ 1 ; 
+        }
+        let i =0 ; 
+        while(i<BsizeY){
+            let j=0; 
+            while(j < BsizeX ){
+                do grid.setValueIndex(j,i,Math.min(2,j & 3) + 1 );
+                let j=j+1; 
             }
-            return ; 
+            let i=i+1; 
+        }
+        return ;
     }
-    function Array getLevel(){
-        return level ; 
+    method void getLevel0(){
+        do LevelFactory(3,2,1); 
+        return ;
     }
+    method void getLevel1(){
+        do LevelFactory(2,64,1); 
+        return ;
+    }
+    method void getLevel2(){
+        do LevelFactory(1,64,3); 
+        return ;
+    }
+    method void getLevel3(){
+        do LevelFactory(2,64,10) ; 
+        return ;
+    }
+    method void getLevel4(){
+        do LevelFactory(1,32,13) ; 
+        return ;
+    }
+    method void getLevel5(){
+        do LevelFactory(1,32,15) ; 
+        return ;
+    }
+    method void getLevel6(){
+        do LevelFactory(1,64,15); 
+        return ;
+    }
+    method void getLevel7(){
+        do LevelFactory(5,64,15) ; 
+        return ;
+    }
+    method void getLevel8(){
+        do LevelFactory(15,64,15) ; 
+        return ;
+    }
+    method void getLevel9(){
+        do LevelFactory(30,64,15) ; 
+        return ;
+    }
+
 
 
 }

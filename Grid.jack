@@ -5,28 +5,14 @@ class Grid{
         return ; 
     }
     constructor Grid new(int Bx , int By ){
-        var int i,j ; 
-        var bool ff; 
         let rows = By ; 
         let cols = Bx ; 
         let grid = Array.new(Math.multiply(Bx,By));
-        let i =0 ; 
-        let ff = false ; 
-        while(i<By){
-            let j=0; 
-            while(j < Bx ){
-                let grid[j + Math.multiply(i,64)]= Math.min(2,j & 3) + 1 ;
-                let j=j+1; 
-            }
-            let i=i+1; 
-        }
-    return this;
+        return this;
     }
     method void draw(){
         var int i,j ;
-        var bool ff; 
         let i = 0;
-        let ff=false;
         while(i<rows){
             let j=0; 
             while(j < cols ){
@@ -51,8 +37,6 @@ class Grid{
     }
     method void drawIndex(int j , int i ){
          do Block.draw((j&1) = 1, grid[j + Math.multiply(i,64)],Math.multiply(8,j) , Math.multiply(8,i));
-      
-
         return ; 
     }
     method void eraseIndex(int j , int i ){
@@ -60,15 +44,37 @@ class Grid{
          do Block.erase((j&1) = 1,Math.multiply(8,j) , Math.multiply(8,i));
         return ;
     }
-    method bool emptyGrid(){
+    method void eraseIndexR(int j , int i ){
+         do Block.erase((j&1) = 1,Math.multiply(8,j) , Math.multiply(8,i));
+        return ;
+    }
+    method bool isEmpty(){
+        var int i,j ;
+        var bool ff; 
+        let i = 0;
+        let ff=false;
+        while(i<rows){
+            let j=0; 
+            while(j < cols ){
+                if(~(grid[j + Math.multiply(i,64)] = 0) ){
+                    return false ;
+                }
+            let j=j+1; 
+        }
+        let i=i+1; 
+        }
         return true ;
     }
-    method void setValueIndex(){
+    method void setValueIndex(int j, int i , int type ){
+        let grid[j + Math.multiply(i,64)] = type ; 
         return ; 
     }
     method int getType(int j, int i){
         return grid[j + Math.multiply(i,64)]; 
     }
-
+    method void dispose(){
+        do grid.dispose();
+        return ; 
+    }
 
 }

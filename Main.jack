@@ -8,24 +8,18 @@ class Main {
     var bool winned ; 
     var int i ; 
     var Block logo ; 
- 
     do ExtendedMath.init(); 
- 
-
-
-
     do Ball.init();
     do Random.init();
     do Grid.init(); 
     do Game.init();
     do Levels.init(); 
-
    let startKey = 0 ; 
    let level = 0 ; 
-    while(true){
+
    do Screen.clearScreen();
-    do Output.moveCursor(0,18);
-    do Output.printString("BreakMania by Idan Maman");
+    do Output.moveCursor(0,9);
+    do Output.printString("BreakMania by Idan Maman and Alex Sichov");
 
    let i=0 ; 
    while(i < 32){
@@ -39,7 +33,6 @@ class Main {
     do Output.printInt(level); 
     do Output.printString(" >");
     while(~(startKey = 128)){
-   
        let startKey = Keyboard.keyPressed(); 
        if(startKey = 130){
          let level = level -1 ; 
@@ -59,14 +52,10 @@ class Main {
          do Output.printInt(level); 
          do Output.printString(" >");
        }
-       
-
-
-
       do Sys.wait(100);
       }
       do Screen.clearScreen();
-      let game  = Game.new();
+      let game  = Game.new(level);
       let winned =  game.play();
       do game.dispose();
       do Screen.clearScreen();
@@ -78,10 +67,10 @@ class Main {
          do Output.printString("WINNER - PRESS ENTER TO TRY AGAIN");
       }
       while(~(Keyboard.keyPressed() = 128)){}
-      let startKey =0 ; 
-      do Sys.wait(200);
+
+
   
-    }
+
 
       return;
    }

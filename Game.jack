@@ -6,38 +6,32 @@ class Game{
     static int BPx , BPy ;  
     static int ballRadius ; 
     static int barHeight , barWidth ;
-    static int GridRows,GridCols,GridSizeY,GridSizeX;
+    field int GridRows,GridCols,GridSizeY,GridSizeX;
     static int frameRateTime ; // simple calc of  1 divided by the  estimated top number of images per seconds Multiplied by 1000 rounded to the to tenth number 
+    static int locationMask ; 
     function void init(){
         let Px = 512 ; // width of the screen 
         let Py = 256 ; // height of the screen 
         let BPx = 256; // middle of 511
         let BPy = 216; // 256 - 8 * 5
-        let GridRows = 15 ; 
-        let GridCols =  64;
-        let GridSizeY = ExtendedMath.shiftLeft3(GridRows);
-        let GridSizeX =ExtendedMath.shiftLeft3(GridCols);
         let ballRadius = 2; 
         let barHeight = Bar.getSizeHeight(); 
         let barWidth = Bar.getSizeWidth(); 
         let frameRateTime = 80; //frame Rate is about 13 ...
+        let locationMask = ~(7) ; 
         return ; 
     }
-    constructor Game new(){
-        var Ball ball1;
-        var int i ; 
-        let i=0 ; 
-        while(i<1){
-            let ball1 = Ball.new(ballRadius); 
-            do ball1.setLocation(BPx + Math.multiply(i,2) ,BPy);
-            let balls = List.new(ball1 ,balls ); 
-            let i = i+ 1 ; 
-        }
+    constructor Game new(int levelN){
+        var Levels level ; 
+        let level = Levels.new(levelN) ; 
+        let GridRows = level.getSizeY() ; 
+        let GridCols =  level.getSizeX() ; 
+        let GridSizeY = ExtendedMath.shiftLeft3(GridRows);
+        let GridSizeX =ExtendedMath.shiftLeft3(GridCols);
+        let balls = level.getBalls();
         let bar = Bar.new(BPx,BPy);       
-       
-        let grid = Grid.new(GridCols,GridRows); // how many blocks we want in the game
+        let grid = level.getGrid(); // how many blocks we want in the game
         do grid.draw(); 
-        do grid.eraseIndex(0,0);
         return this ; 
     }
 
@@ -97,26 +91,38 @@ class Game{
                     let ended =false ; 
                 }
                 else{
-                let  j  = Math.divide(x+1,8); 
-                let i = Math.divide(y+1,8); 
-                let type =grid.getType(j,i);
-                if(~( type= 0 )){
-                    if((type = 1)){
-                        do grid.drawIndex(j,i);
+                    
+                    let  j  = Math.divide(x,8); 
+                    let i = Math.divide(y,8); 
+                    if((x&7) = 0 ){
+                        let j = j -1; 
                     }
-                    else{
-                        do grid.eraseIndex(j,i);
+                    if((y&7) =0 ){
+                        let i = i -1 ; 
                     }
-                    if((x & 7 ) > (y & 7 )){
-                        do ballTMP.chageDirY();
-                    }
-                    else{
-                        do ballTMP.chageDirX();
-                    }
-                    //let nX = x ; 
-                    //let nY = y ; 
-                    let nX = x +1; 
-                    let nY  = y + 1  ; 
+                    let type =grid.getType(j,i);
+                    if(~( type= 0 )){
+                        if(((y & 7 ) = 1 )| ((y & 7 ) = 0 ) ){
+                            do ballTMP.chageDirX();
+                        
+                        }
+                        else{
+                            do ballTMP.chageDirY();
+                        }
+  
+                    do grid.eraseIndex(j,i);
+                    do grid.eraseIndexR(Math.min(j+1 , GridCols -1 ),i);
+                    do grid.eraseIndexR(Math.max(j-1,0),i);
+                    do grid.eraseIndexR(j,Math.min(i+1 ,GridRows -1 ));
+                    do grid.eraseIndexR(j,Math.max(i-1,0));
+                    do grid.drawIndex(Math.min(j+1 , GridCols -1 ),i);
+                    do grid.drawIndex(Math.max(j-1,0),i);
+                    do grid.drawIndex(j,Math.min(i+1 ,GridRows -1 ));
+                    do grid.drawIndex(j,Math.max(i-1,0));
+            
+                   
+                    let nX = (x&locationMask) + 8; 
+                    let nY  =(y&locationMask)+8 ; 
                     let ended = false ; 
                 }
                 if(D > 0 ){
@@ -167,6 +173,24 @@ class Game{
                  do ballTMP.chageDirX();
                 let nX = ballTMP.getNextLocationX();
                 let nY = BPy - ballRadius;
+                if(keyPressed = 132 ){ //right 
+                    let D = ballTMP.getDirX() ; 
+                    if(D = -1 ){
+                        do ballTMP.setDirX(1);
+                    }
+                    else{
+                        do ballTMP.setDirX(D+1);
+                    }
+                }
+                if(keyPressed = 130){ //right 
+                    let D = ballTMP.getDirX() ; 
+                    if(D = 1 ){
+                        do ballTMP.setDirX(-1);
+                    }
+                    else{
+                        do ballTMP.setDirX(D-1);
+                    }
+                }
             }
             do ballTMP.setLocation(Math.min(Px - ballRadius - 1  ,Math.max(nX,ballRadius)),(Math.min(Py -ballRadius -1  , Math.max(nY,ballRadius))));
             do ballTMP.draw(); 
@@ -189,13 +213,16 @@ class Game{
                 return false ;
             }
             let i = i+1; 
+            if(grid.isEmpty()){
+              return true;
+            }
             do Sys.wait(80);
         }
         return true ; 
     }
 
     method void dispose(){ 
-        //do grid.dispose();
+        do grid.dispose();
         do Memory.deAlloc(bar); 
         do Memory.deAlloc(grid);
         return ; 

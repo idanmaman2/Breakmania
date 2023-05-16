@@ -27,7 +27,7 @@ class Ball {
         return ;
     }
     method int getNextLocationX(){
-        return loc.getX()+ExtendedMath.shiftLeft4(dir.getX());
+        return loc.getX()+ExtendedMath.shiftLeft3(dir.getX());
     }
     method void Move(){
         do loc.setX(getLocationX());
