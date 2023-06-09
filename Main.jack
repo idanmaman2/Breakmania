@@ -61,7 +61,7 @@ class Main {
       do Screen.clearScreen();
       do Output.moveCursor(12,13);
       if(~winned){
-         do Output.printString("LOSER - YOU CAN TRY AGAIN YOU IDIOT");
+         do Output.printString("LOSER - YOU CAN TRY AGAIN");
       }
       if(winned){
          do Output.printString("WINNER - PRESS ENTER TO TRY AGAIN");

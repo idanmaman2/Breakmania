@@ -179,7 +179,7 @@ class Game{
                         do ballTMP.setDirX(1);
                     }
                     else{
-                        do ballTMP.setDirX(D+1);
+                        do ballTMP.setDirX(Math.max(2,D+1));
                     }
                 }
                 if(keyPressed = 130){ //right 
@@ -188,7 +188,7 @@ class Game{
                         do ballTMP.setDirX(-1);
                     }
                     else{
-                        do ballTMP.setDirX(D-1);
+                        do ballTMP.setDirX(Math.min(-2,D-1));
                     }
                 }
             }

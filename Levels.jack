@@ -80,7 +80,7 @@ class Levels{
         return ;
     }
     method void getLevel0(){
-        do LevelFactory(3,2,1); 
+        do LevelFactory(50,2,1); 
         return ;
     }
     method void getLevel1(){
